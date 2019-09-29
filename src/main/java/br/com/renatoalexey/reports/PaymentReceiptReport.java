@@ -10,28 +10,23 @@ public class PaymentReceiptReport implements Report {
     private double transactionsBalance;
 
     public void buildsReportInformation(AccountTransactionDTO accountTransactionDTO) {
-        TransactionType transactionType = getTransactionType(accountTransactionDTO);
+        TransactionType transactionType = TransactionType.getTransactionType(accountTransactionDTO);
         if (transactionType == TransactionType.RECEIPT) buildsReceiptTotals(accountTransactionDTO.getValue());
         else buildsPaymentTotals(accountTransactionDTO.getValue());
     }
 
     private void buildsReceiptTotals (double value) {
-        this.receiptTotals += value;
+        receiptTotals += value;
         buildsBalance(value);
     }
 
     private void buildsPaymentTotals (double value) {
-        this.paymentTotals += value;
+        paymentTotals += value;
         buildsBalance(value);
     }
 
     private void buildsBalance(double value) {
-        this.transactionsBalance += value;
-    }
-
-    private TransactionType getTransactionType(AccountTransactionDTO accountTransactionDTO) {
-        if(accountTransactionDTO.getValue() < 0) return TransactionType.PAYMENT;
-        else return TransactionType.RECEIPT;
+        transactionsBalance += value;
     }
 
     public double getReceiptTotals() {

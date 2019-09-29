@@ -5,10 +5,12 @@ import br.com.renatoalexey.model.CategoryType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class AccountTransactionReaderFromFile {
 
@@ -33,8 +35,18 @@ public class AccountTransactionReaderFromFile {
         accountTransactionDTO.setDate(simpleDateFormat.parse(lineFields[0]));
         accountTransactionDTO.setDescription(lineFields[1]);
         accountTransactionDTO.setValue(Double.parseDouble(lineFields[2]));
-        accountTransactionDTO.setCategoria(CategoryType.valueOf(lineFields[3]));
+        accountTransactionDTO.setCategoria(CategoryType.valueOf(deAccent(lineFields[3])));
 
         return accountTransactionDTO;
+    }
+
+    public static String deAccent(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("").toUpperCase();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(CategoryType.valueOf(deAccent("alimentação").toUpperCase()));
     }
 }

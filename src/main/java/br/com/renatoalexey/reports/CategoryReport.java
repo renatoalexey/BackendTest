@@ -37,16 +37,8 @@ public class CategoryReport implements Report{
         return paymentsByCategoryMap;
     }
 
-    public void setPaymentsByCategoryMap(Map<CategoryType, Double> paymentsByCategoryMap) {
-        this.paymentsByCategoryMap = paymentsByCategoryMap;
-    }
-
     public CategoryType getMostExpensiveCategory() {
         return mostExpensiveCategory;
-    }
-
-    public void setMostExpensiveCategory(CategoryType mostExpensiveCategory) {
-        this.mostExpensiveCategory = mostExpensiveCategory;
     }
 
 }
