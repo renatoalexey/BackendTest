@@ -1,0 +1,181 @@
+{
+  "pagamentos": [
+    {
+      "data": "11/jul",
+      "descricao": "Auto Posto Shell",
+      "moeda": "R$",
+      "valor": "-50,00",
+      "categoria": "transporte"
+    },
+    {
+      "data": "24/jun",
+      "descricao": "Ofner",
+      "moeda:": "R$",
+      "valor": "-23,80",
+      "categoria": "transporte"
+    },
+    {
+      "data": "25/jun",
+      "descricao": "Urbe Cafe",
+      "moeda": "R$",
+      "valor": "-45,10",
+      "categoria": "alimentação"
+    },
+    {
+      "data": "30 / jun",
+      "descricao": "Assai Atacadista",
+      "moeda": "R$",
+      "valor": "-9,96",
+      "categoria": "alimentação"
+    },
+    {
+      "data": "30 / jun",
+      "descricao": "Uber Do Brasil",
+      "moeda": "R$",
+      "valor": "-4,16",
+      "categoria": "transporte"
+    },
+    {
+      "data": "02 / jul",
+      "descricao": "Maremonti Campo Belo",
+      "moeda": "R$",
+      "valor": "-12,32",
+      "categoria": "alimentacao"
+    },
+    {
+      "data": "03 / jul",
+      "descricao": "Uber Do Brasil",
+      "moeda": "R$",
+      "valor": "-7,63",
+      "categoria": "transporte"
+    },
+    {
+      "data": "05 / jul",
+      "descricao": "Zelo",
+      "moeda": "R$",
+      "valor": "-16,65",
+      "categoria": "vestuario"
+    },
+    {
+      "data": "05 / jul",
+      "descricao": "Lucky Comercio",
+      "moeda": "R$",
+      "valor": "-69,99",
+      "categoria": ""
+    },
+    {
+      "data": "06 / jul",
+      "descricao": "Unidas Locadora",
+      "moeda": "R$",
+      "valor": "-523,17",
+      "categoria": "transporte"
+    },
+    {
+      "data": "07 / jul",
+      "descricao": "Farmacia Paraiso",
+      "moeda": "R$",
+      "valor": "-12,50",
+      "categoria": "higiene"
+    },
+    {
+      "data": "07 / jul",
+      "descricao": "Posto Vale Da Lua Ltda",
+      "moeda": "R$",
+      "valor": "-180,06",
+      "categoria": "transporte"
+    },
+    {
+      "data": "09 / jul",
+      "descricao": "Unidas Locadora",
+      "moeda": "R$",
+      "valor": "-40,40",
+      "categoria": "transporte"
+    },
+    {
+      "data": "12 / jul",
+      "descricao": "World Tennis",
+      "moeda": "R$",
+      "valor": "- 28,08",
+      "categoria": "vestuario"
+    },
+    {
+      "data": "15 / mai",
+      "descricao": "Otica Max",
+      "moeda": "R$",
+      "valor": "-55,00",
+      "categoria": "vestuario"
+    },
+    {
+      "data": "17 / mai",
+      "descricao": "Lojas Renner",
+      "moeda": "R$",
+      "valor": "-53,24",
+      "categoria": "vestuario"
+    },
+    {
+      "data": "17 / jun",
+      "descricao": "Centauro",
+      "moeda": "R$",
+      "valor": "-105,00",
+      "categoria": "vestuario"
+    },
+    {
+      "data": "09 / jul",
+      "descricao": "Posto Vale Da Lua Ltda",
+      "moeda": "R$",
+      "valor": "-168,48",
+      "categoria": "transporte"
+    },
+    {
+      "data": "13 / jul",
+      "descricao": "Assai Atacadista",
+      "moeda": "R$",
+      "valor": "-140,91",
+      "categoria": "alimentacao"
+    }
+  ],
+  "recebimentos": [
+    {
+      "data": "10 / jul",
+      "descricao": "Marcelo B.",
+      "moeda": "R$",
+      "valor": "50,00"
+    },
+    {
+      "data": "04 / jul",
+      "descricao": "Antonio C.",
+      "moeda": "R$",
+      "valor": "15,00"
+    },
+    {
+      "data": "02 / jul",
+      "descricao": "Luciano N.",
+      "moeda": "R$",
+      "valor": "68,00"
+    },
+    {
+      "data": "19 / abr",
+      "descricao": "Marcelo B.",
+      "moeda": "R$",
+      "valor": "62,00"
+    },
+    {
+      "data": "07 / mai",
+      "descricao": "Douglas S.",
+      "moeda": "R$",
+      "valor": "45,00"
+    },
+    {
+      "data": "20 / mai",
+      "descricao": "Daniela S.",
+      "moeda": "R$",
+      "valor": "6,00"
+    },
+    {
+      "data": "13 / jun",
+      "descricao": "Renata B.",
+      "moeda": "R$",
+      "valor": "268,5"
+    }
+  ]
+}

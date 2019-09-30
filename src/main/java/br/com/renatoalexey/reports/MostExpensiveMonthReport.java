@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MostExpensiveMonthReport implements Report {
-    private Map<String, Double> paymentsByMonthMap = new HashMap<String, Double>();
+    private Map<String, Double> paymentsByMonthMap = new HashMap<>();
     private Double mostExpensiveMonthValue = new Double(0);
     private String mostExpensiveMonth = "";
 

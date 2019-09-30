@@ -1,9 +1,15 @@
 package br.com.renatoalexey.reader;
 
+import br.com.renatoalexey.connect.ConnectsToJsonAPI;
+import br.com.renatoalexey.model.AccountTransactionDTO;
+import br.com.renatoalexey.model.CategoryType;
+import br.com.renatoalexey.utils.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,26 +17,24 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class AccountTransactionReaderFromJson {
 
-    public void connectsToAPI(String apiUrl) throws IOException {
-        HttpURLConnection httpURLConnection = null;
-        URL url = new URL("");
+    private ConnectsToJsonAPI connectsToJsonAPI;
 
-        httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("GET");
-
-        String json = readJsonFromUrl(url);
-
-
-
+    public AccountTransactionReaderFromJson(ConnectsToJsonAPI connectsToJsonAPI) {
+        this.connectsToJsonAPI = connectsToJsonAPI;
     }
 
-    public  void transformsJSONIntoDTO (String json) {
+    public List<AccountTransactionDTO> transformsJsonIntoDTO(String apiUrl) throws ParseException, IOException {
+        URL url = connectsToJsonAPI.connectsToAPI(apiUrl);
+        String json = connectsToJsonAPI.readJsonFromUrl(url);
+
+        List<AccountTransactionDTO> accountTransactionDTOList = new ArrayList<>();
+
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = (JsonObject) parser.parse(json);
 
@@ -40,32 +44,47 @@ public class AccountTransactionReaderFromJson {
 
         while(iterator.hasNext()) {
             JsonElement jsonElement = iterator.next();
-            transformsJsonElementIntoAccountTransactionDTO(jsonElement);
+            accountTransactionDTOList.add(transformsJsonElementIntoAccountTransactionDTO(jsonElement));
         }
 
-
+        return accountTransactionDTOList;
     }
 
-    public void transformsJsonElementIntoAccountTransactionDTO(JsonElement jsonElement) {
-        Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
+    private AccountTransactionDTO transformsJsonElementIntoAccountTransactionDTO(JsonElement jsonElement) throws ParseException {
+        AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
 
-        for (Map.Entry<String, JsonElement> entry : entries) {
-            System.out.println(entry.getKey() + " " + entry.getValue().toString());
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        accountTransactionDTO.setDate(getDateFromJsonElement(jsonObject.get("data")));
+        accountTransactionDTO.setDescription(transformsJsonElementToString(jsonObject.get("descricao")));
+        accountTransactionDTO.setCategoria(getCategoryTypeFromJsonElement(jsonObject.get("categoria")));
+        accountTransactionDTO.setValue(getValueFromJsonElement(jsonObject.get("valor")));
+
+        return accountTransactionDTO;
+    }
+
+    private double getValueFromJsonElement(JsonElement jsonElement) {
+        return Double.parseDouble(transformsJsonElementToString(jsonElement).replaceAll(",", ".").replaceAll(" ", ""));
+    }
+
+    private CategoryType getCategoryTypeFromJsonElement(JsonElement jsonElement) {
+        CategoryType categoryType = null;
+        try {
+            categoryType = CategoryType.valueOf(Utils.removeAccentsAndSetsToUpperCase(transformsJsonElementToString(jsonElement)));
+        } catch (IllegalArgumentException e) {
+            return null;
         }
+
+        return categoryType;
+    }
+
+    private Date getDateFromJsonElement(JsonElement jsonElement) throws ParseException {
+        String textDate = transformsJsonElementToString(jsonElement).replaceAll(" ", "");
+        return new SimpleDateFormat("dd/MMM").parse(textDate);
+    }
+
+    private String transformsJsonElementToString(JsonElement jsonElement) {
+        return String.valueOf(jsonElement).replaceAll("\"", "");
     }
 
 
-    public static String readJsonFromUrl(URL url) throws IOException {
-        if (url == null)
-            throw new RuntimeException("URL é null");
-
-        String html = null;
-        StringBuilder sB = new StringBuilder();
-        BufferedReader bR = new BufferedReader(new InputStreamReader(url.openStream()));
-            while ((html = bR.readLine()) != null)
-                sB.append(html);
-
-
-        return sB.toString();
-    }
 }

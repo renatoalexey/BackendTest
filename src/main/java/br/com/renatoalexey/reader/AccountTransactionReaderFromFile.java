@@ -2,6 +2,7 @@ package br.com.renatoalexey.reader;
 
 import br.com.renatoalexey.model.AccountTransactionDTO;
 import br.com.renatoalexey.model.CategoryType;
+import br.com.renatoalexey.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,18 +36,8 @@ public class AccountTransactionReaderFromFile {
         accountTransactionDTO.setDate(simpleDateFormat.parse(lineFields[0]));
         accountTransactionDTO.setDescription(lineFields[1]);
         accountTransactionDTO.setValue(Double.parseDouble(lineFields[2]));
-        accountTransactionDTO.setCategoria(CategoryType.valueOf(deAccent(lineFields[3])));
+        accountTransactionDTO.setCategoria(CategoryType.valueOf(Utils.removeAccentsAndSetsToUpperCase(lineFields[3])));
 
         return accountTransactionDTO;
-    }
-
-    public static String deAccent(String str) {
-        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
-        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(nfdNormalizedString).replaceAll("").toUpperCase();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(CategoryType.valueOf(deAccent("alimentação").toUpperCase()));
     }
 }
