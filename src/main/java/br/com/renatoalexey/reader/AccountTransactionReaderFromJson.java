@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sun.util.resources.cldr.br.LocaleNames_br;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -54,27 +55,16 @@ public class AccountTransactionReaderFromJson {
         AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
 
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        accountTransactionDTO.setDate(getDateFromJsonElement(jsonObject.get("data")));
+        accountTransactionDTO.setDate(Utils.getDateFromString(transformsJsonElementToString(jsonObject.get("data")), "dd/MMM", null));
         accountTransactionDTO.setDescription(transformsJsonElementToString(jsonObject.get("descricao")));
-        accountTransactionDTO.setCategoria(getCategoryTypeFromJsonElement(jsonObject.get("categoria")));
+        accountTransactionDTO.setCategoria(Utils.getCategoryTypeFromString(transformsJsonElementToString(jsonObject.get("categoria"))));
         accountTransactionDTO.setValue(getValueFromJsonElement(jsonObject.get("valor")));
 
         return accountTransactionDTO;
     }
 
     private double getValueFromJsonElement(JsonElement jsonElement) {
-        return Double.parseDouble(transformsJsonElementToString(jsonElement).replaceAll(",", ".").replaceAll(" ", ""));
-    }
-
-    private CategoryType getCategoryTypeFromJsonElement(JsonElement jsonElement) {
-        CategoryType categoryType = null;
-        try {
-            categoryType = CategoryType.valueOf(Utils.removeAccentsAndSetsToUpperCase(transformsJsonElementToString(jsonElement)));
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-
-        return categoryType;
+        return Utils.getValueFromString(transformsJsonElementToString(jsonElement));
     }
 
     private Date getDateFromJsonElement(JsonElement jsonElement) throws ParseException {
