@@ -1,24 +1,19 @@
 package br.com.renatoalexey.reader;
 
-import br.com.renatoalexey.config.AppConfig;
 import br.com.renatoalexey.connect.ConnectsToJsonAPI;
+import br.com.renatoalexey.utils.UtilsForTests;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.*;
-import java.net.URL;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+
+import static org.mockito.Mockito.when;
+
 public class AccountTransactionReaderFromJsonTest {
 
     private String json;
@@ -33,16 +28,7 @@ public class AccountTransactionReaderFromJsonTest {
         MockitoAnnotations.initMocks(this);
 
         try {
-            FileReader fileReader = new FileReader("src/test/resource/db.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String currentLine = "";
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                stringBuilder.append(currentLine);
-            }
-
-            json = stringBuilder.toString();
+           json = UtilsForTests.readsJsonFromFile("src/test/resource/db.txt");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -52,16 +38,10 @@ public class AccountTransactionReaderFromJsonTest {
     }
 
     @Test
-    public void testJsonReader() {
-        try {
+    public void testJsonReader() throws IOException, ParseException {
             accountTransactionReaderFromJson = new AccountTransactionReaderFromJson(connectsToJsonAPI);
             when(connectsToJsonAPI.connectsToAPI("test")).thenReturn(null);
             when(connectsToJsonAPI.readJsonFromUrl(null)).thenReturn(json);
             accountTransactionReaderFromJson.transformsJsonIntoDTO("test");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

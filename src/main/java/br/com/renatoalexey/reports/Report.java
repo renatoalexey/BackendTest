@@ -6,4 +6,5 @@ public interface Report {
 
     void buildsReportInformation(AccountTransactionDTO accountTransactionDTO);
 
+    void printsReport();
 }

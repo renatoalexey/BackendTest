@@ -2,25 +2,20 @@ package br.com.renatoalexey.reader;
 
 import br.com.renatoalexey.connect.ConnectsToJsonAPI;
 import br.com.renatoalexey.model.AccountTransactionDTO;
-import br.com.renatoalexey.model.CategoryType;
 import br.com.renatoalexey.utils.Utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import sun.util.resources.cldr.br.LocaleNames_br;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class AccountTransactionReaderFromJson {
 

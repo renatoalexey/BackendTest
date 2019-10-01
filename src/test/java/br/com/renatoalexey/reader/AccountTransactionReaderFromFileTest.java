@@ -10,25 +10,14 @@ import java.io.IOException;
 import java.text.ParseException;
 
 public class AccountTransactionReaderFromFileTest {
-    private BufferedReader bufferedReader;
 
     private AccountTransactionReaderFromFile accountTransactionReaderFromFile;
-
-    @Before
-    public void setup() {
-        try {
-            FileReader fileReader = new FileReader("src/test/resource/account_transactions.log");
-            bufferedReader = new BufferedReader(fileReader);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Test
     public void testFileReader() {
         accountTransactionReaderFromFile = new AccountTransactionReaderFromFile();
         try {
-            accountTransactionReaderFromFile.transformsFileIntoDTO(bufferedReader);
+            accountTransactionReaderFromFile.transformsFileIntoDTO("src/test/resource/account_transactions.log");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {

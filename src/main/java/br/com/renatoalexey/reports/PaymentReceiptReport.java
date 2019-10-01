@@ -9,10 +9,16 @@ public class PaymentReceiptReport implements Report {
     private double paymentTotals;
     private double transactionsBalance;
 
+    @Override
     public void buildsReportInformation(AccountTransactionDTO accountTransactionDTO) {
         TransactionType transactionType = TransactionType.getTransactionType(accountTransactionDTO);
         if (transactionType == TransactionType.RECEIPT) buildsReceiptTotals(accountTransactionDTO.getValue());
         else buildsPaymentTotals(accountTransactionDTO.getValue());
+    }
+
+    @Override
+    public void printsReport() {
+
     }
 
     private void buildsReceiptTotals (double value) {

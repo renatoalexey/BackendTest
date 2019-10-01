@@ -1,7 +1,9 @@
 package br.com.renatoalexey.main;
 
+import br.com.renatoalexey.factory.ObjectFactory;
 import br.com.renatoalexey.model.AccountTransactionDTO;
 import br.com.renatoalexey.reader.AccountTransactionReaderFromFile;
+import br.com.renatoalexey.reports.AccountTransactionReportsExecutor;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,16 +16,15 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            FileReader fileReader = new FileReader(args[0]);
-
-            List<AccountTransactionDTO> accountTransactionDTOListFromFile =
-                    new AccountTransactionReaderFromFile().transformsFileIntoDTO(new BufferedReader(fileReader));
+            ObjectFactory objectFactory = ObjectFactory.getInstance();
+            AccountTransactionReportsExecutor accountTransactionReportsExecutor = objectFactory.getAccountTransactionReportsExecutor();
+            accountTransactionReportsExecutor.execute(args[0]);
         } catch (FileNotFoundException e) {
-
+            e.printStackTrace();
         } catch (ParseException e) {
-
+            e.printStackTrace();
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
 
     }

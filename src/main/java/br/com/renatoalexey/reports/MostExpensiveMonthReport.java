@@ -8,11 +8,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that calculates the most expensive month
+ *  @see Report
+ *  @author Renato Alexey
+ */
 public class MostExpensiveMonthReport implements Report {
     private Map<String, Double> paymentsByMonthMap = new HashMap<>();
     private Double mostExpensiveMonthValue = new Double(0);
     private String mostExpensiveMonth = "";
 
+    @Override
     public void buildsReportInformation(AccountTransactionDTO accountTransactionDTO) {
         TransactionType transactionType = TransactionType.getTransactionType(accountTransactionDTO);
         if(transactionType == TransactionType.PAYMENT) {
@@ -31,6 +37,11 @@ public class MostExpensiveMonthReport implements Report {
                 mostExpensiveMonthValue = monthValue;
             }
         }
+    }
+
+    @Override
+    public void printsReport() {
+
     }
 
     private String getMonthByDate(Date date) {

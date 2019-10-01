@@ -5,6 +5,7 @@ import br.com.renatoalexey.model.CategoryType;
 import br.com.renatoalexey.utils.Utils;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.Normalizer;
 import java.text.ParseException;
@@ -16,8 +17,11 @@ import java.util.regex.Pattern;
 
 public class AccountTransactionReaderFromFile {
 
-    public List<AccountTransactionDTO> transformsFileIntoDTO(BufferedReader bufferedReader) throws IOException,
+    public List<AccountTransactionDTO> transformsFileIntoDTO(String filePath) throws IOException,
             ParseException {
+
+        FileReader fileReader = new FileReader(filePath);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
         List<AccountTransactionDTO> accountTransactionDTOList = new ArrayList<AccountTransactionDTO>();
 
         String currentLine = "";
