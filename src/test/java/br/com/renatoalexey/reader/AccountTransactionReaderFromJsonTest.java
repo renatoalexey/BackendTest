@@ -55,9 +55,9 @@ public class AccountTransactionReaderFromJsonTest {
     public void testJsonReader() {
         try {
             accountTransactionReaderFromJson = new AccountTransactionReaderFromJson(connectsToJsonAPI);
-            when(connectsToJsonAPI.connectsToAPI("coco")).thenReturn(null);
+            when(connectsToJsonAPI.connectsToAPI("test")).thenReturn(null);
             when(connectsToJsonAPI.readJsonFromUrl(null)).thenReturn(json);
-            accountTransactionReaderFromJson.transformsJsonIntoDTO("coco");
+            accountTransactionReaderFromJson.transformsJsonIntoDTO("test");
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {

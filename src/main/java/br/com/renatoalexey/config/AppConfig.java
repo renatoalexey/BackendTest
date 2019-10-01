@@ -23,4 +23,5 @@ public class AppConfig {
     public ConnectsToJsonAPI connectsToJsonAPI() {
         return new ConnectsToJsonAPI();
     }
+
 }

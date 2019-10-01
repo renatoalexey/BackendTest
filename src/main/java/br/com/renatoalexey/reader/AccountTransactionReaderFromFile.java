@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class AccountTransactionReaderFromFile {
@@ -29,14 +30,14 @@ public class AccountTransactionReaderFromFile {
     }
 
     private AccountTransactionDTO transformsFileLineIntoAccountTransactionDTO(String currentLine) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("");
 
-        String[] lineFields = currentLine.split("");
+        String[] lineFields = currentLine.split("[|]");
         AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
-        accountTransactionDTO.setDate(simpleDateFormat.parse(lineFields[0]));
-        accountTransactionDTO.setDescription(lineFields[1]);
-        accountTransactionDTO.setValue(Double.parseDouble(lineFields[2]));
-        accountTransactionDTO.setCategoria(CategoryType.valueOf(Utils.removeAccentsAndSetsToUpperCase(lineFields[3])));
+        accountTransactionDTO.setDate(Utils.getDateFromString(lineFields[2], "dd-MMM", Locale.US));
+        accountTransactionDTO.setDescription(lineFields[3]);
+        accountTransactionDTO.setValue(Utils.getValueFromString(lineFields[4]));
+        if(lineFields.length == 6)
+            accountTransactionDTO.setCategoria(Utils.getCategoryTypeFromString(lineFields[5]));
 
         return accountTransactionDTO;
     }
