@@ -56,4 +56,14 @@ public class AccountTransactionDTO {
     public int hashCode() {
         return Objects.hash(date, description, value, categoria);
     }
+
+    @Override
+    public String toString() {
+        return "Movimentação{" +
+                "date=" + date +
+                ", description='" + description + '\'' +
+                ", value=" + value +
+                ", categoria=" + categoria +
+                '}';
+    }
 }

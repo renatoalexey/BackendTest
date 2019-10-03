@@ -40,6 +40,10 @@ public class AccountTransactionReportsExecutor {
     }
 
     private void buildsAllReportsData() {
+        System.out.println("Log das movimentações ordenadas por data:");
+        for (AccountTransactionDTO accountTransactionDTO : allTransactionsSortedByDate) {
+            System.out.println(accountTransactionDTO);
+        }
         for (AccountTransactionDTO accountTransactionDTO : allTransactionsSortedByDate) {
             for (Report report : reportList) {
                 report.buildsReportInformation(accountTransactionDTO);
