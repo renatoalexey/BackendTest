@@ -52,7 +52,10 @@ public class CategoryReport implements Report{
     }
 
     private void buildsMostExpensiveCategory(Double totalByCategory, CategoryType categoryType) {
-        if(totalByCategory < mostExpensiveCategoryValue) mostExpensiveCategory = categoryType;
+        if(totalByCategory < mostExpensiveCategoryValue) {
+            mostExpensiveCategory = categoryType;
+            mostExpensiveCategoryValue = totalByCategory;
+        }
     }
 
     public Map<CategoryType, Double> getPaymentsByCategoryMap() {

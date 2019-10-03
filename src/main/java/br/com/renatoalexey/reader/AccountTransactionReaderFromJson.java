@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,24 +27,32 @@ public class AccountTransactionReaderFromJson {
     }
 
     public List<AccountTransactionDTO> transformsJsonIntoDTO(String apiUrl) throws ParseException, IOException {
-        URL url = connectsToJsonAPI.connectsToAPI(apiUrl);
-        String json = connectsToJsonAPI.readJsonFromUrl(url);
+        HttpURLConnection httpURLConnection = null;
+        try {
+            httpURLConnection = connectsToJsonAPI.connectsToAPI(apiUrl);
+            String json = connectsToJsonAPI.readJsonFromUrl(httpURLConnection);
 
-        List<AccountTransactionDTO> accountTransactionDTOList = new ArrayList<>();
+            List<AccountTransactionDTO> accountTransactionDTOList = new ArrayList<>();
 
-        JsonParser parser = new JsonParser();
-        JsonObject jsonObject = (JsonObject) parser.parse(json);
+            JsonParser parser = new JsonParser();
+            JsonObject jsonObject = (JsonObject) parser.parse(json);
 
-        JsonArray jsonArray = (JsonArray)jsonObject.get("pagamentos");
+            JsonArray jsonArray = (JsonArray) jsonObject.get("pagamentos");
 
-        Iterator<JsonElement> iterator = jsonArray.iterator();
+            Iterator<JsonElement> iterator = jsonArray.iterator();
 
-        while(iterator.hasNext()) {
-            JsonElement jsonElement = iterator.next();
-            accountTransactionDTOList.add(transformsJsonElementIntoAccountTransactionDTO(jsonElement));
+            while (iterator.hasNext()) {
+                JsonElement jsonElement = iterator.next();
+                accountTransactionDTOList.add(transformsJsonElementIntoAccountTransactionDTO(jsonElement));
+            }
+        return accountTransactionDTOList;
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            if(httpURLConnection != null)
+                httpURLConnection.disconnect();
         }
 
-        return accountTransactionDTOList;
     }
 
     private AccountTransactionDTO transformsJsonElementIntoAccountTransactionDTO(JsonElement jsonElement) throws ParseException {
@@ -60,11 +69,6 @@ public class AccountTransactionReaderFromJson {
 
     private double getValueFromJsonElement(JsonElement jsonElement) {
         return Utils.getValueFromString(transformsJsonElementToString(jsonElement));
-    }
-
-    private Date getDateFromJsonElement(JsonElement jsonElement) throws ParseException {
-        String textDate = transformsJsonElementToString(jsonElement).replaceAll(" ", "");
-        return new SimpleDateFormat("dd/MMM").parse(textDate);
     }
 
     private String transformsJsonElementToString(JsonElement jsonElement) {

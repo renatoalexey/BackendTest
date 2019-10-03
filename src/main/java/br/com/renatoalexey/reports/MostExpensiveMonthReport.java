@@ -51,4 +51,8 @@ public class MostExpensiveMonthReport implements Report {
     public String getMostExpensiveMonth() {
         return mostExpensiveMonth;
     }
+
+    public Double getMostExpensiveMonthValue() {
+        return mostExpensiveMonthValue;
+    }
 }

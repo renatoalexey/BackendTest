@@ -5,37 +5,33 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 public class ConnectsToJsonAPI {
 
-    public URL connectsToAPI(String apiUrl) throws IOException {
-        HttpURLConnection httpURLConnection = null;
-        try {
-            URL url = new URL(apiUrl);
+    public HttpURLConnection connectsToAPI(String apiUrl) throws IOException {
+        URL url = new URL(apiUrl);
 
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("GET");
+        httpURLConnection.setRequestProperty("Accept", "application/json");
 
-            String json = readJsonFromUrl(url);
-
-            return url;
-        } catch (IOException e) {
-            throw e;
-        } finally {
-            httpURLConnection.disconnect();
+        if (httpURLConnection.getResponseCode() != 200) {
+            throw new RuntimeException("Falha ao conectar na API " + apiUrl
+            + " : HTTP error code : "
+                    + httpURLConnection.getResponseCode());
         }
+
+        return httpURLConnection;
+
     }
 
-    public String readJsonFromUrl(URL url) throws IOException {
-        if (url == null)
-            throw new RuntimeException("URL é null");
-
-        String html = null;
+    public String readJsonFromUrl(HttpURLConnection url) throws IOException {
+        String html = "";
         StringBuilder sB = new StringBuilder();
-        BufferedReader bR = new BufferedReader(new InputStreamReader(url.openStream()));
+        BufferedReader bR = new BufferedReader(new InputStreamReader(url.getInputStream(), Charset.forName("UTF-8")));
         while ((html = bR.readLine()) != null)
             sB.append(html);
-
 
         return sB.toString();
     }

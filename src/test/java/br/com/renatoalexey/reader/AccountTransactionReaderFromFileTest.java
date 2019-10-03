@@ -18,18 +18,17 @@ import java.util.List;
 public class AccountTransactionReaderFromFileTest {
 
     private AccountTransactionReaderFromFile accountTransactionReaderFromFile;
-
     private List<AccountTransactionDTO> listForTests;
 
     @Before
     public void setup() throws ParseException {
+        accountTransactionReaderFromFile = new AccountTransactionReaderFromFile();
         listForTests = createListForTests();
     }
 
 
     @Test
     public void testFileReader() throws IOException, ParseException {
-        accountTransactionReaderFromFile = new AccountTransactionReaderFromFile();
 
         List<AccountTransactionDTO> accountTransactionDTOList = accountTransactionReaderFromFile.transformsFileIntoDTO("src/test/resource/account_transactions_minor.log");
 

@@ -11,7 +11,7 @@ import java.util.*;
 
 public class AccountTransactionReportsExecutor {
 
-    private final String jsonAPI = "https://my-json-server.typicode.com/cairano/backend-test/db";
+    private final String JSON_API = "https://my-json-server.typicode.com/cairano/backend-test/db";
 
     private AccountTransactionReaderFromFile accountTransactionReaderFromFile;
 
@@ -30,7 +30,7 @@ public class AccountTransactionReportsExecutor {
 
     public void execute(String filePath) throws IOException, ParseException {
         List<AccountTransactionDTO> listAccountTransactionDTOFromFile = accountTransactionReaderFromFile.transformsFileIntoDTO(filePath);
-        List<AccountTransactionDTO> listAccountTransactionDTOFromJson = accountTransactionReaderFromJson.transformsJsonIntoDTO(jsonAPI);
+        List<AccountTransactionDTO> listAccountTransactionDTOFromJson = accountTransactionReaderFromJson.transformsJsonIntoDTO(JSON_API);
 
         allTransactionsSortedByDate = generatesSingleListSortedByDate(listAccountTransactionDTOFromFile, listAccountTransactionDTOFromJson);
 

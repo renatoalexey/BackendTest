@@ -16,6 +16,11 @@ public class AccountTransactionReportsExecutorTest {
         accountTransactionReportsExecutor = new AccountTransactionReportsExecutor(ObjectFactory.getInstance());
     }
 
+    /**
+     * Integration test for the program
+     * @throws IOException
+     * @throws ParseException
+     */
     @Test
     public void systemTest() throws IOException, ParseException {
         accountTransactionReportsExecutor.execute("src/test/resource/account_transactions.log");
