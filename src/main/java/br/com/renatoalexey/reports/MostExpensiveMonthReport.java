@@ -27,12 +27,12 @@ public class MostExpensiveMonthReport implements Report {
             Double monthValue =  paymentsByMonthMap.get(month);
             if(monthValue == null) {
                 monthValue = new Double(0);
-                paymentsByMonthMap.put(month, monthValue);
             }
 
             monthValue += accountTransactionDTO.getValue();
+            paymentsByMonthMap.put(month, monthValue);
 
-            if(monthValue > mostExpensiveMonthValue) {
+            if(monthValue < mostExpensiveMonthValue) {
                 mostExpensiveMonth = month;
                 mostExpensiveMonthValue = monthValue;
             }
@@ -41,7 +41,7 @@ public class MostExpensiveMonthReport implements Report {
 
     @Override
     public void printsReport() {
-
+        System.out.println("Mês de maior gasto: " + mostExpensiveMonth + " Gasto: " + mostExpensiveMonthValue);
     }
 
     private String getMonthByDate(Date date) {

@@ -12,12 +12,7 @@ import java.util.regex.Pattern;
 public class Utils {
 
     public static double getValueFromString(String value) {
-        double parseDouble = 0;
-        try {
-            parseDouble = Double.parseDouble(value.replaceAll("\\.", "").replaceAll(",", ".").replaceAll(" ", ""));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+        double parseDouble = Double.parseDouble(value.replaceAll("\\.", "").replaceAll(",", ".").replaceAll(" ", ""));
         return parseDouble;
     }
 
@@ -28,14 +23,13 @@ public class Utils {
     }
 
     public static CategoryType getCategoryTypeFromString(String category) {
-        CategoryType categoryType = null;
-        try {
-            categoryType = CategoryType.valueOf(removeAccentsAndSetsToUpperCase(category));
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-
+        String textCategory = removeAccentsAndSetsToUpperCase(category);
+        CategoryType categoryType = CategoryType.valueOf(removeWhiteSpaceFromBeginningAndEnd(textCategory));
         return categoryType;
+    }
+
+    public static String removeWhiteSpaceFromBeginningAndEnd(String input) {
+        return input.replaceAll("^\\s+", "").replaceAll("\\s+$", "");
     }
 
     private static String removeAccentsAndSetsToUpperCase(String str) {

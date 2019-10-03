@@ -38,10 +38,11 @@ public class AccountTransactionReaderFromFile {
         String[] lineFields = currentLine.split("[|]");
         AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
         accountTransactionDTO.setDate(Utils.getDateFromString(lineFields[2], "dd-MMM", Locale.US));
-        accountTransactionDTO.setDescription(lineFields[3]);
+        accountTransactionDTO.setDescription(Utils.removeWhiteSpaceFromBeginningAndEnd(lineFields[3]));
         accountTransactionDTO.setValue(Utils.getValueFromString(lineFields[4]));
         if(lineFields.length == 6)
             accountTransactionDTO.setCategoria(Utils.getCategoryTypeFromString(lineFields[5]));
+        else accountTransactionDTO.setCategoria(CategoryType.OUTRAS);
 
         return accountTransactionDTO;
     }

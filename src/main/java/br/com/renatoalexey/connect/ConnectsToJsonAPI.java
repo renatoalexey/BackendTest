@@ -10,14 +10,20 @@ public class ConnectsToJsonAPI {
 
     public URL connectsToAPI(String apiUrl) throws IOException {
         HttpURLConnection httpURLConnection = null;
-        URL url = new URL(apiUrl);
+        try {
+            URL url = new URL(apiUrl);
 
-        httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("GET");
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
 
-        String json = readJsonFromUrl(url);
+            String json = readJsonFromUrl(url);
 
-        return url;
+            return url;
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            httpURLConnection.disconnect();
+        }
     }
 
     public String readJsonFromUrl(URL url) throws IOException {

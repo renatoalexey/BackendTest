@@ -2,6 +2,7 @@ package br.com.renatoalexey.reports;
 
 import br.com.renatoalexey.model.AccountTransactionDTO;
 import br.com.renatoalexey.model.CategoryType;
+import br.com.renatoalexey.model.TransactionType;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -21,13 +22,21 @@ public class CategoryReport implements Report{
 
     @Override
     public void buildsReportInformation(AccountTransactionDTO accountTransactionDTO) {
+        if(TransactionType.getTransactionType(accountTransactionDTO) == TransactionType.RECEIPT) return;
         Pair<Double, CategoryType> doubleCategoryTypePair = buildPaymentsByCategory(accountTransactionDTO);
         buildsMostExpensiveCategory(doubleCategoryTypePair.getLeft(), doubleCategoryTypePair.getRight());
     }
 
     @Override
     public void printsReport() {
+        System.out.println("Gasto total por Categoria:");
+        for (Map.Entry<CategoryType, Double> categoryTypeDoubleEntry : paymentsByCategoryMap.entrySet()) {
+            CategoryType categoryType = categoryTypeDoubleEntry.getKey();
+            if(categoryType != null)
+                System.out.println("Categoria: " + categoryType.getCategoryName() + "  Gasto Total: " + categoryTypeDoubleEntry.getValue());
+        }
 
+        System.out.println("Categoria de maior gasto: " + mostExpensiveCategory.getCategoryName());
     }
 
     private Pair<Double, CategoryType> buildPaymentsByCategory(AccountTransactionDTO accountTransactionDTO) {
@@ -35,9 +44,9 @@ public class CategoryReport implements Report{
         Double totalByCategory = paymentsByCategoryMap.get(accountTransactionDTO.getCategoria());
         if(totalByCategory == null) {
             totalByCategory = new Double(0);
-            paymentsByCategoryMap.put(accountTransactionDTO.getCategoria(), totalByCategory);
         }
         totalByCategory += accountTransactionDTO.getValue();
+        paymentsByCategoryMap.put(accountTransactionDTO.getCategoria(), totalByCategory);
 
         return Pair.of(totalByCategory, accountTransactionDTO.getCategoria());
     }

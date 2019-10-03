@@ -18,7 +18,9 @@ public class PaymentReceiptReport implements Report {
 
     @Override
     public void printsReport() {
-
+        System.out.println("Total de recebimentos: " + receiptTotals);
+        System.out.println("Total de pagamentos: " + paymentTotals);
+        System.out.println("Balanço: " + (receiptTotals + paymentTotals));
     }
 
     private void buildsReceiptTotals (double value) {
