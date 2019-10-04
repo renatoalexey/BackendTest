@@ -1,6 +1,7 @@
 package br.com.renatoalexey.reader;
 
 import br.com.renatoalexey.connect.ConnectsToJsonAPI;
+import br.com.renatoalexey.factory.ObjectFactory;
 import br.com.renatoalexey.utils.UtilsForTests;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,11 +38,16 @@ public class AccountTransactionReaderFromJsonTest {
         }
     }
 
+    /**
+     * Test that basically verifies if reader doesn't throw exceptions
+     * @throws IOException
+     * @throws ParseException
+     */
     @Test
     public void testJsonReader() throws IOException, ParseException {
-            accountTransactionReaderFromJson = new AccountTransactionReaderFromJson(connectsToJsonAPI);
+            accountTransactionReaderFromJson = new AccountTransactionReaderFromJson(connectsToJsonAPI, ObjectFactory.init().getAccountTransactionReportsExecutor());
             when(connectsToJsonAPI.connectsToAPI("test")).thenReturn(null);
             when(connectsToJsonAPI.readJsonFromUrl(null)).thenReturn(json);
-            accountTransactionReaderFromJson.transformsJsonIntoDTO("test");
+            accountTransactionReaderFromJson.generatesReportsFromJSON("test");
     }
 }

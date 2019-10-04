@@ -25,7 +25,7 @@ public class Utils {
     }
 
     public static CategoryType getCategoryTypeFromString(String category) {
-        if("".equals(category)) return CategoryType.OUTRAS;
+        if("null".equals(category) || "".equals(category)) return CategoryType.OUTRAS;
         String textCategory = removeAccentsAndSetsToUpperCase(category);
         CategoryType categoryType = CategoryType.valueOf(removeWhiteSpaceFromBeginningAndEnd(textCategory));
         return categoryType;

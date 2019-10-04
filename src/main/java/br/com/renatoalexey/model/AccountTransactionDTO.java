@@ -7,7 +7,7 @@ public class AccountTransactionDTO {
     private Date date;
     private String description;
     private double value;
-    private CategoryType categoria;
+    private CategoryType categoryType;
 
     public Date getDate() {
         return date;
@@ -33,12 +33,12 @@ public class AccountTransactionDTO {
         this.value = value;
     }
 
-    public CategoryType getCategoria() {
-        return categoria;
+    public CategoryType getCategoryType() {
+        return categoryType;
     }
 
-    public void setCategoria(CategoryType categoria) {
-        this.categoria = categoria;
+    public void setCategoryType(CategoryType categoryType) {
+        this.categoryType = categoryType;
     }
 
     @Override
@@ -49,12 +49,12 @@ public class AccountTransactionDTO {
         return Double.compare(that.value, value) == 0 &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(description, that.description) &&
-                categoria == that.categoria;
+                categoryType == that.categoryType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, description, value, categoria);
+        return Objects.hash(date, description, value, categoryType);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class AccountTransactionDTO {
                 "date=" + date +
                 ", description='" + description + '\'' +
                 ", value=" + value +
-                ", categoria=" + categoria +
+                ", categoryType=" + categoryType +
                 '}';
     }
 }

@@ -1,19 +1,21 @@
 package br.com.renatoalexey.reports;
 
 import br.com.renatoalexey.factory.ObjectFactory;
+import br.com.renatoalexey.main.StartsProgramExecution;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
 
-public class AccountTransactionReportsExecutorTest {
+public class StartsProgramExecutionTest {
 
-    private AccountTransactionReportsExecutor accountTransactionReportsExecutor;
+    private StartsProgramExecution startsProgramExecution;
 
     @Before
     public void setup(){
-        accountTransactionReportsExecutor = new AccountTransactionReportsExecutor(ObjectFactory.getInstance());
+        ObjectFactory objectFactory = ObjectFactory.init();
+        startsProgramExecution = objectFactory.getStartsProgramExecution();
     }
 
     /**
@@ -23,6 +25,6 @@ public class AccountTransactionReportsExecutorTest {
      */
     @Test
     public void systemTest() throws IOException, ParseException {
-        accountTransactionReportsExecutor.execute("src/test/resource/account_transactions.log");
+        startsProgramExecution.run("src/test/resource/account_transactions.log");
     }
 }

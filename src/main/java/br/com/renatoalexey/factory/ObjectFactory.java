@@ -1,6 +1,7 @@
 package br.com.renatoalexey.factory;
 
 import br.com.renatoalexey.connect.ConnectsToJsonAPI;
+import br.com.renatoalexey.main.StartsProgramExecution;
 import br.com.renatoalexey.reader.AccountTransactionReaderFromFile;
 import br.com.renatoalexey.reader.AccountTransactionReaderFromJson;
 import br.com.renatoalexey.reports.AccountTransactionReportsExecutor;
@@ -17,7 +18,12 @@ public class ObjectFactory {
     }
 
     public static synchronized ObjectFactory getInstance() {
-        if(objectFactory == null) objectFactory = new ObjectFactory();
+        if(objectFactory == null) throw new RuntimeException("Utilize o método init para instanciar o objeto");
+        return objectFactory;
+    }
+
+    public static synchronized ObjectFactory init() {
+        objectFactory = new ObjectFactory();
         return objectFactory;
     }
 
@@ -33,20 +39,25 @@ public class ObjectFactory {
         return new PaymentReceiptReport();
     }
 
-    public AccountTransactionReaderFromJson getAccountTransactionReaderFromJson() {
-        return new AccountTransactionReaderFromJson(getConnectsToJsonAPI());
+    public AccountTransactionReaderFromJson getAccountTransactionReaderFromJson(
+            AccountTransactionReportsExecutor accountTransactionReportsExecutor) {
+        return new AccountTransactionReaderFromJson(getConnectsToJsonAPI(), accountTransactionReportsExecutor);
     }
 
     public ConnectsToJsonAPI getConnectsToJsonAPI() {
         return new ConnectsToJsonAPI();
     }
 
-    public AccountTransactionReaderFromFile getAccountTransactionReaderFromFile() {
-        return new AccountTransactionReaderFromFile();
+    public AccountTransactionReaderFromFile getAccountTransactionReaderFromFile(
+            AccountTransactionReportsExecutor accountTransactionReportsExecutor) {
+        return new AccountTransactionReaderFromFile(accountTransactionReportsExecutor);
     }
 
     public AccountTransactionReportsExecutor getAccountTransactionReportsExecutor(){
         return new AccountTransactionReportsExecutor(ObjectFactory.getInstance());
     }
 
+    public StartsProgramExecution getStartsProgramExecution() {
+        return new StartsProgramExecution();
+    }
 }

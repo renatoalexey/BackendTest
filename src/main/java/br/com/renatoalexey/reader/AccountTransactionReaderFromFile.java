@@ -2,31 +2,33 @@ package br.com.renatoalexey.reader;
 
 import br.com.renatoalexey.model.AccountTransactionDTO;
 import br.com.renatoalexey.model.CategoryType;
+import br.com.renatoalexey.reports.AccountTransactionReportsExecutor;
 import br.com.renatoalexey.utils.Utils;
 
 import java.io.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class AccountTransactionReaderFromFile {
 
-    public List<AccountTransactionDTO> transformsFileIntoDTO(String filePath) throws IOException,
+    private AccountTransactionReportsExecutor accountTransactionReportsExecutor;
+
+    public AccountTransactionReaderFromFile(AccountTransactionReportsExecutor accountTransactionReportsExecutor) {
+        this.accountTransactionReportsExecutor = accountTransactionReportsExecutor;
+    }
+
+    public void generatesReportsFromFile(String filePath) throws IOException,
             ParseException {
 
         File file = new File(filePath);
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(file),"UTF-8"));
-        List<AccountTransactionDTO> accountTransactionDTOList = new ArrayList<>();
-
         String currentLine;
 
         while ((currentLine = bufferedReader.readLine()) != null) {
-            accountTransactionDTOList.add(transformsFileLineIntoAccountTransactionDTO(currentLine));
+            AccountTransactionDTO accountTransactionDTO = transformsFileLineIntoAccountTransactionDTO(currentLine);
+            accountTransactionReportsExecutor.buildsAllReportsData(accountTransactionDTO);
         }
-
-        return accountTransactionDTOList;
     }
 
     private AccountTransactionDTO transformsFileLineIntoAccountTransactionDTO(String currentLine) throws ParseException {
@@ -36,8 +38,8 @@ public class AccountTransactionReaderFromFile {
         accountTransactionDTO.setDescription(Utils.removeWhiteSpaceFromBeginningAndEnd(lineFields[3]));
         accountTransactionDTO.setValue(Utils.getValueFromString(lineFields[4]));
         if(lineFields.length == 6)
-            accountTransactionDTO.setCategoria(Utils.getCategoryTypeFromString(lineFields[5]));
-        else accountTransactionDTO.setCategoria(CategoryType.OUTRAS);
+            accountTransactionDTO.setCategoryType(Utils.getCategoryTypeFromString(lineFields[5]));
+        else accountTransactionDTO.setCategoryType(CategoryType.OUTRAS);
 
         return accountTransactionDTO;
     }

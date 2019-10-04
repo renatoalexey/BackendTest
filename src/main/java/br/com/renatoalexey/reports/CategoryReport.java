@@ -41,14 +41,14 @@ public class CategoryReport implements Report{
 
     private Pair<Double, CategoryType> buildPaymentsByCategory(AccountTransactionDTO accountTransactionDTO) {
 
-        Double totalByCategory = paymentsByCategoryMap.get(accountTransactionDTO.getCategoria());
+        Double totalByCategory = paymentsByCategoryMap.get(accountTransactionDTO.getCategoryType());
         if(totalByCategory == null) {
             totalByCategory = new Double(0);
         }
         totalByCategory += accountTransactionDTO.getValue();
-        paymentsByCategoryMap.put(accountTransactionDTO.getCategoria(), totalByCategory);
+        paymentsByCategoryMap.put(accountTransactionDTO.getCategoryType(), totalByCategory);
 
-        return Pair.of(totalByCategory, accountTransactionDTO.getCategoria());
+        return Pair.of(totalByCategory, accountTransactionDTO.getCategoryType());
     }
 
     private void buildsMostExpensiveCategory(Double totalByCategory, CategoryType categoryType) {

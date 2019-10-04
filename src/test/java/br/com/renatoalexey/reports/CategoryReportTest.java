@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,15 +36,15 @@ public class CategoryReportTest {
     private List<AccountTransactionDTO> buildListForTest() {
         AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
         accountTransactionDTO.setValue(-10);
-        accountTransactionDTO.setCategoria(CategoryType.ALIMENTACAO);
+        accountTransactionDTO.setCategoryType(CategoryType.ALIMENTACAO);
 
         AccountTransactionDTO accountTransactionDTO2 = new AccountTransactionDTO();
         accountTransactionDTO2.setValue(-20);
-        accountTransactionDTO2.setCategoria(CategoryType.ALIMENTACAO);
+        accountTransactionDTO2.setCategoryType(CategoryType.ALIMENTACAO);
 
         AccountTransactionDTO accountTransactionDTO3 = new AccountTransactionDTO();
         accountTransactionDTO3.setValue(-5);
-        accountTransactionDTO3.setCategoria(CategoryType.DIVERSAO);
+        accountTransactionDTO3.setCategoryType(CategoryType.DIVERSAO);
 
         return Arrays.asList(accountTransactionDTO, accountTransactionDTO2, accountTransactionDTO3);
     }
